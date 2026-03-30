@@ -1,6 +1,6 @@
 import unittest
 
-from nodes_delimiter import split_nodes_delimiter
+from inline_markdown import split_nodes_delimiter
 from textnode import TextNode, TextType
 
 class TestNodesDelimiter(unittest.TestCase):
@@ -22,6 +22,7 @@ class TestNodesDelimiter(unittest.TestCase):
 
         self.assertEqual(result, [TextNode("this is ", TextType.TEXT), TextNode("code", TextType.CODE), TextNode(" text", TextType.TEXT)])
 
+
     def test_bold_delimiter(self):
 
         node = TextNode("this is **bold** text", TextType.TEXT)
@@ -29,6 +30,7 @@ class TestNodesDelimiter(unittest.TestCase):
         result = split_nodes_delimiter([node], "**", TextType.BOLD)
 
         self.assertEqual(result, [TextNode("this is ", TextType.TEXT), TextNode("bold", TextType.BOLD), TextNode(" text", TextType.TEXT)])
+
 
     def test_italic_delimiter(self):
 
@@ -38,12 +40,14 @@ class TestNodesDelimiter(unittest.TestCase):
 
         self.assertEqual(result, [TextNode("this is ", TextType.TEXT), TextNode("italic", TextType.ITALIC), TextNode(" text", TextType.TEXT)])
    
+
     def test_unmatched_delimiter(self):
 
         node = TextNode("this is _broken text", TextType.TEXT)
 
         with self.assertRaises(Exception):
             split_nodes_delimiter([node], "_", TextType.ITALIC)
+
 
     def test_non_text_delimiter(self):
 
